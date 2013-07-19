@@ -1,0 +1,145 @@
+No never claim, checking only asserts and deadlocks..
+Found deadlock [explored 22 states, re-explored 0].
+ - Products by which it is violated (as feature expression):
+   (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Online_1 & Setparams_2 & Defaultparams_2)
+
+ - Stack trace:
+   features                            = /
+   globals.chan_verificationprocess.s00.f00 = 0
+   globals.chan_imageprocessor.s00.f00 = 0
+   globals.chan_sessionkeygathering.s00.f00 = 0
+   globals.chan_credentials.s00.f00    = 0
+   globals.chan_encryption.s00.f00     = 0
+   globals.chan_comparison.s00.f00     = 0
+   globals.chan_thirdpartyverification.s00.f00 = 0
+   globals.chan_analysis.s00.f00       = 0
+   globals.chan_interfacepreparation.s00.f00 = 0
+   globals.chan_interfaceshow.s00.f00  = 0
+   globals.chan_alert.s00.f00          = 0
+   globals.result                      = 0
+   globals.setparamsout                = 0
+   globals.temp                        = 0
+   globals.usercredentials             = 0
+   globals.fakeinterface               = 0
+   globals.biometrictemplate           = 0
+   globals.fakeinterfacetemplate       = 0
+   globals.wrongattemptno              = 0
+   globals.hasheddata                  = 0
+   globals.biometricimage              = 0
+   globals.sessionkey                  = 0
+   globals.userinfo                    = 0
+   globals.verificationlog             = 0
+   globals.analysisresult              = 0
+   globals.parameters                  = 0
+   globals.encrypteddata               = 0
+   globals.fake                        = 0
+   pid 00, userverification            @ NL34
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempR              = 0
+    --
+   features                            = /
+   pid 00, userverification            @ NL36
+    --
+   features                            = /
+   pid 00, userverification            @ NL39
+    --
+   features                            = (Biometricprocessing_1)
+   pid 00, userverification            @ NL42
+    --
+   features                            = (Biometricprocessing_1)
+   pid 00, userverification            @ NL45
+    --
+   features                            = (Biometricprocessing_1 & Sesionkey)
+   pid 00, userverification            @ NL49
+    --
+   features                            = (Biometricprocessing_1 & Sesionkey)
+   pid 00, userverification            @ NL52
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey)
+   pid 00, userverification            @ NL56
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey)
+   pid 00, userverification            @ NL61
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Defaultparams_2)
+   pid 00, userverification            @ NL64
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Defaultparams_2)
+   pid 00, userverification            @ NL67
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   globals.temp                        = 1
+   pid 00, userverification            @ NL70
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL71
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL75
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL76
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL82
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL86
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL87
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL90
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL91
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL95
+    --
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Online_1 & Setparams_2 & Defaultparams_2)
+   pid 00, userverification            @ NL99
+    --
+    -- Final state repeated in full:
+   features                            = (Userinfo_1 & Biometricprocessing_1 & Offline_1 & Sesionkey & Online_1 & Setparams_2 & Defaultparams_2)
+   globals.chan_verificationprocess.s00.f00 = 0
+   globals.chan_imageprocessor.s00.f00 = 0
+   globals.chan_sessionkeygathering.s00.f00 = 0
+   globals.chan_credentials.s00.f00    = 0
+   globals.chan_encryption.s00.f00     = 0
+   globals.chan_comparison.s00.f00     = 0
+   globals.chan_thirdpartyverification.s00.f00 = 0
+   globals.chan_analysis.s00.f00       = 0
+   globals.chan_interfacepreparation.s00.f00 = 0
+   globals.chan_interfaceshow.s00.f00  = 0
+   globals.chan_alert.s00.f00          = 0
+   globals.result                      = 0
+   globals.setparamsout                = 0
+   globals.temp                        = 1
+   globals.usercredentials             = 0
+   globals.fakeinterface               = 0
+   globals.biometrictemplate           = 0
+   globals.fakeinterfacetemplate       = 0
+   globals.wrongattemptno              = 0
+   globals.hasheddata                  = 0
+   globals.biometricimage              = 0
+   globals.sessionkey                  = 0
+   globals.userinfo                    = 0
+   globals.verificationlog             = 0
+   globals.analysisresult              = 0
+   globals.parameters                  = 0
+   globals.encrypteddata               = 0
+   globals.fake                        = 0
+   pid 00, userverification            @ NL99
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempI              = 0
+   userverification.tempR              = 0
+    --

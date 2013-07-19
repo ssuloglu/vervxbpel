@@ -1,0 +1,38 @@
+root Userverification{
+	group someOf{
+		Cauthtype group someOf{
+			Biometricprocessing group allOf{
+				Biometricprocessing_1,
+				Setparams
+			},
+			Userinfo group allOf{
+				Defaultparams,
+				Userinfo_1
+			}
+		},
+		Cfaketrans group someOf{
+			Fakeenabled group allOf{
+				Fakeenabled_1
+			}
+		},
+		Cauthmode group someOf{
+			Offline group allOf{
+				Offline_1
+			},
+			Online group allOf{
+				Sesionkey,
+				Online_1
+			}
+		},
+		Ceparset group someOf{
+			Setparams_1 group allOf{
+				Setparams_2
+			},
+			Defaultparams_1 group allOf{
+				Defaultparams_2
+			}
+		}
+	}
+	Defaultparams <-> Defaultparams_2;
+	Setparams <-> Setparams_2;
+}

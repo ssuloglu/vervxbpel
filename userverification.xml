@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<bpel:process xmlns:abx="http://www.activebpel.org/bpel/extension" xmlns:vxbpel="http://www.turkselma.com/vxbpel" xmlns:aei="http://www.activebpel.org/2009/02/bpel/extension/ignorable" xmlns:bpel="http://docs.oasis-open.org/wsbpel/2.0/process/executable" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:ext="http://www.activebpel.org/2006/09/bpel/extension/query_handling" xmlns:ext1="http://www.activebpel.org/2009/06/bpel/extension/links" xmlns:xsd="http://www.w3.org/2001/XMLSchema" aei:editStyle="BPMN" ext1:linksAreTransitions="yes" ext:createTargetXPath="yes" ext:disableSelectionFailure="yes" name="userverification" suppressJoinFailure="yes" targetNamespace="http://verificationprocess">
+   <bpel:extensions>
+      <bpel:extension mustUnderstand="no" namespace="http://www.activebpel.org/2009/02/bpel/extension/ignorable"/>
+      <bpel:extension mustUnderstand="no" namespace="http://www.omg.org/spec/BPMN/20100524/DI"/>
+      <bpel:extension mustUnderstand="yes" namespace="http://www.activebpel.org/2006/09/bpel/extension/query_handling"/>
+      <bpel:extension mustUnderstand="yes" namespace="http://www.activebpel.org/2009/06/bpel/extension/links"/>
+   </bpel:extensions>
+    
+   <bpel:partnerLinks>
+      <bpel:partnerLink aei:id="133898434460503437" aei:interface="verfication:VerificationProcess" myRole="Provider" name="VerificationProcess" partnerLinkType="ns:VerificationProcessPLT"/>
+      <bpel:partnerLink aei:id="133898379254801311" aei:interface="encprytionProcess:EncprytionProcess" name="encryption" partnerLinkType="ns:EncprytionProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254801312" aei:interface="ImageprocessorProcess:ImageprocessorProcess" name="imageprocessor" partnerLinkType="ns:ImageprocessorProcessPLT" partnerRole="Provider"/>	  
+      <bpel:partnerLink aei:id="133898379254801313" aei:interface="thirdpartyProcess:ThirdpartyProcess" name="sessionkeygathering" partnerLinkType="ns:ThirdpartyProcessPLT" partnerRole="Provider"/>	  
+      <bpel:partnerLink aei:id="133898379254801313" aei:interface="thirdpartyProcess:ThirdpartyProcess" name="credentials" partnerLinkType="ns:ThirdpartyProcessPLT" partnerRole="Provider"/>	  
+      <bpel:partnerLink aei:id="133898379254801323" aei:interface="comparisonProcess:ComparisonProcess" name="comparison" partnerLinkType="ns:ComparisonProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254801313" aei:interface="thirdpartyProcess:ThirdpartyProcess" name="thirdpartyverification" partnerLinkType="ns:ThirdpartyProcessPLT" partnerRole="Provider"/>	  
+      <bpel:partnerLink aei:id="133898379254801323" aei:interface="comparisonProcess:ComparisonProcess" name="analysis" partnerLinkType="ns:ComparisonProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254801323" aei:interface="intPreperationProcess:IntPreperationProcess" name="interfacepreparation" partnerLinkType="ns:IntPreperationProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254801323" aei:interface="intPreperationProcess:IntPreperationProcess" name="interfaceshow" partnerLinkType="ns:IntPreperationProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254801345" aei:interface="calculatorProcess:CalculatorProcess" name="attemptcalc" partnerLinkType="ns:CalculatorProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254802343" aei:interface="logProcess:LogProcess" name="log" partnerLinkType="ns:LogProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254802343" aei:interface="connectionProcess:ConnectionProcess" name="connection" partnerLinkType="ns:ConnectionProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254802343" aei:interface="warnProcess:WarnProcess" name="warn" partnerLinkType="ns:WarnProcessPLT" partnerRole="Provider"/>
+      <bpel:partnerLink aei:id="133898379254802355" aei:interface="alertProcess:AlertProcess" name="alert" partnerLinkType="ns:AlertProcessPLT" partnerRole="Provider"/>
+</bpel:partnerLinks>
+   <bpel:variables>
+      <bpel:variable element="verfy:verificationProcessRequest" name="userinfo"/>
+      <bpel:variable element="verfy:credentialsProcessRequest" name="usercredentials"/>
+      <bpel:variable element="verfy:encryptionProcessResponse" name="encrypteddata"/>
+      <bpel:variable element="verfy:utilityProcessResponse" name="setparamsOut"/>
+      <bpel:variable element="verfy:imageprocessorProcessRequest" name="biometricimage"/>
+      <bpel:variable element="verfy:imageprocessorProcessResponse" name="biometrictemplate"/>
+      <bpel:variable element="verfy:thirdpartyProcessResponse" name="sessionkey"/>
+      <bpel:variable element="verfy:thirdpartyProcessResponse" name="usercredentials"/>
+      <bpel:variable element="verfy:comparisonProcessResponse" name="result"/>
+      <bpel:variable element="verfy:thirdpartyProcessResponse" name="hashedData"/>
+      <bpel:variable element="verfy:comparisonProcessResponse" name="analysisresult"/>
+      <bpel:variable element="verfy:IntPreperationProcess" name="fakeinterfacetemplate"/>
+      <bpel:variable element="verfy:IntPreperationProcess" name="fakeinterface"/>
+      <bpel:variable element="verfy:CalculatorProcess" name="wrongattemptno"/>
+      <bpel:variable element="verfy:LogProcess" name="verificationlog"/> 
+      <bpel:variable element="verfy:LogProcess" name="parameters"/>  
+   </bpel:variables>
+
+   <bpel:flow aei:id="133922132242812195">
+      <bpel:sequence aei:id="133906543658609633">
+         <bpel:receive aei:id="133906543657609631" createInstance="yes" name="Receive_Verification_Request" 
+                                                   operation="verify" 
+                                                   partnerLink="VerificationProcess" 
+                                                   variable="userinfo"/>
+         <bpel:flow aei:forkJoin="yes" aei:id="133906581967910877">
+            <bpel:flow aei:forkJoin="yes" aei:id="133906637330315461">
+    		   <vxbpel:VariationPoint name = "BiometricData">
+					<vxbpel:Variants>
+						<vxbpel:Variant name = "biometricProcessing">
+							<vxbpel:VPBpelCode>	
+                                <bpel:invoke aei:id="133906606989211079" name="Process_Image" 
+                                                    operation="processImage" 
+                                                    partnerLink="imageprocessor" 
+                                                    inputVariable = "biometricimage" 
+                                                    outputVariable = "biometrictemplate"/>
+							</vxbpel:VPBpelCode>
+						</vxbpel:Variant>
+					</vxbpel:Variants>
+				</vxbpel:VariationPoint>
+
+    		   <vxbpel:VariationPoint name = "SessionKeyGathering">
+					<vxbpel:Variants>
+						<vxbpel:Variant name = "sesionkey">
+							<vxbpel:VPBpelCode>				
+							   
+								  <bpel:invoke aei:id="133906639234115601" name="Get_Session_Key" 
+                                                    operation="getSessionKey" 
+                                                    partnerLink="sessionkeygathering" 
+                                                    outputVariable = "sessionkey"/>
+							</vxbpel:VPBpelCode>
+						</vxbpel:Variant>
+					</vxbpel:Variants>
+				</vxbpel:VariationPoint>
+            </bpel:flow>
+			
+			   <vxbpel:VariationPoint name = "UserCredentials">
+					<vxbpel:Variants>
+						<vxbpel:Variant name = "userInfo">
+							<vxbpel:VPBpelCode>
+								<bpel:invoke aei:id="133921936931801363" name="Get_Credentials" 
+                                                    operation="getCredentials" 
+                                                    partnerLink="credentials" 
+                                                    outputVariable = "usercredentials"/>
+							</vxbpel:VPBpelCode>
+						</vxbpel:Variant>
+					</vxbpel:Variants>
+				</vxbpel:VariationPoint>
+		 </bpel:flow>
+		 
+		 <vxbpel:VariationPoint name = "EncryptParameterSet">
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "defaultParams">
+					<vxbpel:VPBpelCode>				            
+						<bpel:invoke aei:id="133906653669217459" name="Encrypt_with_default_parameters" 
+                                                    inputVariable="usercredentials" 
+                                                    operation="encrypt" 
+                                                    outputVariable="encrypteddata" 
+                                                    partnerLink="encryption"/>
+					</vxbpel:VPBpelCode>
+				</vxbpel:Variant>
+				
+				<vxbpel:Variant name = "setParams">
+					<vxbpel:VPBpelCode>				
+						<bpel:sequence name = "setparameters">
+						 <bpel:invoke aei:id="133906653669217458" name = "invParams" 
+                                                    inputVariable="parameters" 
+                                                    operation="setParams" 
+                                                    outputVariable="setparamsOut" 
+                                                    partnerLink="encryption"/>
+						 <bpel:invoke aei:id="133906653669217459" name="Encrypt_with_parameters" 
+                                                    operation="encrypt" 
+                                                    outputVariable="encrypteddata" 
+                                                    partnerLink="encryption"/>		
+						</bpel:sequence>
+					</vxbpel:VPBpelCode>
+				</vxbpel:Variant>
+			</vxbpel:Variants>
+		</vxbpel:VariationPoint>
+		 
+        <bpel:flow aei:forkJoin="yes" aei:id="133906674092019973"> 
+         <vxbpel:VariationPoint name = "DataComparison">
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "offline">
+					<vxbpel:VPBpelCode>				            
+						<bpel:sequence aei:id="133906674092519975">
+						   <bpel:invoke aei:id="133906682601320725" name="Get_Hashed_Data" 
+                                                    operation="getHashedData" 
+                                                    outputVariable="encrypteddata" 
+                                                    partnerLink="encryption"/>
+						   <bpel:invoke aei:id="133906725347525443" name="Compare_hashed_data" 
+                                                    inputVariable="encrypteddata" 
+                                                    operation="compareHashedData" 
+                                                    outputVariable="result" 
+                                                    partnerLink="comparison"/>
+						</bpel:sequence>
+					</vxbpel:VPBpelCode>
+				</vxbpel:Variant>
+			
+				<vxbpel:Variant name = "online">
+					<vxbpel:VPBpelCode>				            						
+						<bpel:sequence aei:id="133906674092519977">
+						   <bpel:reply aei:id="133906677885120555"  name="Send_Hashed_data" 
+                                                    operation = "sendhasseddata" 
+                                                    variable = "hashedData" 
+                                                    partnerLink="thirdpartyverification"/>
+						   <bpel:receive aei:id="133906685966520979" createInstance="yes"
+                                                    name="Get_verification_result"
+                                                    operation = "getverificationresult" 
+                                                    variable = "result" 
+                                                    partnerLink="thirdpartyverification"/>
+						</bpel:sequence>
+					</vxbpel:VPBpelCode>
+				</vxbpel:Variant>
+			</vxbpel:Variants>
+		 </vxbpel:VariationPoint>
+		 </bpel:flow>
+         <bpel:flow aei:forkJoin="yes" aei:id="133906957700507925">
+			<vxbpel:VariationPoint name = "FakeTrans">
+				<vxbpel:Variants>
+					<vxbpel:Variant name = "fakeEnabled">
+						<vxbpel:VPBpelCode>				            			
+							<bpel:sequence aei:id="133906957700507927">
+							   <bpel:invoke aei:id="133906962495808849" name="Analyze_Data" 
+                                                    inputVariable="encrypteddata" 
+                                                    operation="analyzedata" 
+                                                    outputVariable="analysisresult" 
+                                                    partnerLink="analysis"/>
+							   <bpel:if>
+                                    <bpel:condition>$analysisresult == 'fake'</bpel:condition>
+                                        <bpel:invoke aei:id="133906964143008857" name="Prepare_fake_interface_to_user" 
+                                                    inputVariable="userinfo" 
+                                                    operation="preparefakeinterface" 
+                                                    outputVariable="fakeinterfacetemplate" 
+                                                    partnerLink="interfacepreparation"/>
+							            <bpel:flow aei:forkJoin="yes" aei:id="133922131217312179">
+                                            <bpel:empty aei:id="133922131217412181" aei:implicit="yes"/>
+                                            <bpel:invoke aei:id="133906975152810337" name="Show_Fake_Interface_to_user" 
+                                                                operation="showfakeinterface" 
+                                                                outputVariable="fakeinterface" 
+                                                                partnerLink="interfaceshow"/>
+                                            <bpel:reply aei:id="133907001405913573" name="Send_Alert" 
+                                                                operation = "sendalert" 
+                                                                partnerLink = "alert"/>
+                                        </bpel:flow>
+							        <bpel:exit aei:id="133907000663713441"/>
+                               </bpel:if> 
+							</bpel:sequence>
+						</vxbpel:VPBpelCode>
+					</vxbpel:Variant>
+				</vxbpel:Variants>
+			</vxbpel:VariationPoint>			
+		 </bpel:flow>
+      </bpel:sequence>
+   </bpel:flow>
+   
+	<vxbpel:ConfigurableVariationPoints>
+		<vxbpel:ConfigurableVariationPoint id = "CAuthType" defaultVariant = "userInfo">
+			<vxbpel:Name> 
+				Authentication Type
+			</vxbpel:Name>
+			<vxbpel:Rationale>...</vxbpel:Rationale>
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "userInfo">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "UserCredentials" variant = "userInfo"/>
+							<vxbpel:VPChoice vpname = "EncryptParameterSet" variant = "defaultParams"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>
+
+				<vxbpel:Variant name = "biometricProcessing">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "BiometricData" variant = "biometricProcessing"/>
+							<vxbpel:VPChoice vpname = "EncryptParameterSet" variant = "setParams"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>	
+			</vxbpel:Variants>
+		</vxbpel:ConfigurableVariationPoint>
+		
+
+		<vxbpel:ConfigurableVariationPoint id = "CAuthMode" defaultVariant = "offline">
+        <vxbpel:Name> 
+				Authentication Mode
+			</vxbpel:Name>
+			<vxbpel:Rationale>...</vxbpel:Rationale>
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "offline">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "DataComparison" variant = "offline"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>
+
+				<vxbpel:Variant name = "online">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "DataComparison" variant = "online"/>
+							<vxbpel:VPChoice vpname = "SessionKeyGathering" variant = "sesionkey"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>	
+			</vxbpel:Variants>
+		</vxbpel:ConfigurableVariationPoint>
+
+		<vxbpel:ConfigurableVariationPoint id = "CFakeTrans" defaultVariant = "fakeEnabled">
+			<vxbpel:Name> 
+				Fake Transaction Enabling
+			</vxbpel:Name>
+			<vxbpel:Rationale>...</vxbpel:Rationale>
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "fakeEnabled">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "FakeTrans" variant = "fakeEnabled"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>
+			</vxbpel:Variants>
+		</vxbpel:ConfigurableVariationPoint>
+		
+		<vxbpel:ConfigurableVariationPoint id = "CEParSet" defaultVariant = "defaultParams">
+			<vxbpel:Name> 
+				Encryption Parameter Setting
+			</vxbpel:Name>
+			<vxbpel:Rationale>...</vxbpel:Rationale>
+			<vxbpel:Variants>
+				<vxbpel:Variant name = "defaultParams">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "EncryptParameterSet" variant = "defaultParams"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>
+				<vxbpel:Variant name = "setParams">
+					<vxbpel:VariantInfo>...</vxbpel:VariantInfo>
+					<vxbpel:RequiredConfiguration>
+						<vxbpel:VPChoices>
+							<vxbpel:VPChoice vpname = "EncryptParameterSet" variant = "setParams"/>
+						</vxbpel:VPChoices>
+					</vxbpel:RequiredConfiguration>
+				</vxbpel:Variant>
+			</vxbpel:Variants>
+		</vxbpel:ConfigurableVariationPoint>
+	</vxbpel:ConfigurableVariationPoints>
+</bpel:process>
